@@ -10,6 +10,9 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(config => {
+    // 请求header中携带信息
+    // 封装一个方法获取当前用户的token
+    // 具体怎么获取token 或者openid 等信息根据自己的业务决定
     showLoading()
     if (localStorage.getItem('token')) {
         config.headers.Authorization = localStorage.getItem('token')

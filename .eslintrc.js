@@ -44,6 +44,7 @@ module.exports = {
         'object-curly-newline': 'off',
         'default-case': 'off',
         'import/no-dynamic-require': 'off',
+        'no-empty': 'off',
     },
     parserOptions: {
         parser: 'babel-eslint',
