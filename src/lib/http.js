@@ -65,7 +65,7 @@ axios.interceptors.response.use(
 
 function validateResponseCode(res) {
     let { data } = res
-    if (data && data.code && data.code !== 1) {
+    /* if (data && data.code && data.code !== 1) {
         if (data.code === 1001) {
             cookie.clearToken()
             localStorage.clear()
@@ -80,7 +80,7 @@ function validateResponseCode(res) {
         Spin.hide()
         Message.error(data.msg)
         return Promise.reject(res)
-    }
+    } */
     return Promise.resolve(data)
 }
 
