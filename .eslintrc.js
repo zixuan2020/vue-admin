@@ -11,7 +11,10 @@ module.exports = {
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'array-element-newline': ['error', 'consistent'],
-        'indent': ['error', 4, { 'MemberExpression': 0, 'SwitchCase': 1 }],
+        'indent': ['error', 4, {
+            'MemberExpression': 0,
+            'SwitchCase': 1,
+        }],
         'quotes': ['error', 'single'],
         'comma-dangle': ['error', 'always-multiline'],
         'semi': ['error', 'never'],
@@ -45,6 +48,7 @@ module.exports = {
         'default-case': 'off',
         'import/no-dynamic-require': 'off',
         'no-empty': 'off',
+        'no-trailing-spaces': 'off',
     },
     parserOptions: {
         parser: 'babel-eslint',

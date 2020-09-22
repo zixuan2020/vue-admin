@@ -20,6 +20,7 @@
 
 <script>
     import { mapActions } from 'vuex'
+    import { localSave, localRead } from '@/lib/local'
 
     export default {
         name: 'login',
@@ -30,16 +31,16 @@
                 accountError: '',
                 pwdError: '',
                 isShowLoading: false,
-            bg: {},
-        }
-    },
-    created() {
-        this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
-    },
-    watch: {
-        $route: {
-            handler(route) {
-                this.redirect = route.query && route.query.redirect
+                bg: {},
+            }
+        },
+        created() {
+            this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
+        },
+        watch: {
+            $route: {
+                handler(route) {
+                    this.redirect = route.query && route.query.redirect
             },
             immediate: true,
         },
@@ -87,16 +88,18 @@
                                             }
                                         } */
             // 根据账号密码获取用户的token
+
             if (this.accountError == '' && this.pwdError == '') {
                 this.isShowLoading = true
                 // 发送axios请求检查用户登录是否成功
+
+
                 this.handleLogin({
                     username: this.account,
                     password: this.pwd,
                 })
                     .then((resp) => {
                         this.isShowLoading = false
-                        // 进行当前界面的跳转
                         this.$router.push({ path: this.redirect || '/' })
                     })
                     .catch((err) => {

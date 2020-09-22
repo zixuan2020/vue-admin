@@ -52,7 +52,7 @@ export default {
         // 保存用户登录信息
         setUserLoginInfo(state, userLoginInfo) {
             state.userLoginInfo = userLoginInfo
-            localSave('userLoginInfo', JSON.stringify(userLoginInfo))
+            localSave('userInfo', JSON.stringify(userLoginInfo))
         },
         setUserPrivilege(state, privilegeList) {
             /* state.isUpdatePrivilege = true
@@ -111,7 +111,10 @@ export default {
                         const data = res.data
                         commit('setToken', data.token)
                         // 保存用户登录
-                        commit('setUserLoginInfo', data)
+                        commit('setUserLoginInfo', {
+                            uid: data.uid,
+                            name: data.username,
+                        })
                         resolve()
                     })
                     .catch(err => {

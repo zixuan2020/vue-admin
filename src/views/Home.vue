@@ -20,9 +20,9 @@ export default {
     },
     methods: {
         getUserData() {
-            fetchUserData().then(res => {
-                this.userInfo = JSON.stringify(res, null, 4)
-            })
+            // 通过token获取到用户的名称
+
+
         },
     },
 }

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import user from './module/user'
 
 Vue.use(Vuex)
 
@@ -84,6 +85,9 @@ const store = new Vuex.Store({
         setLoading(state, isShowLoading) {
             state.isShowLoading = isShowLoading
         },
+    },
+    modules: {
+        user,
     },
 })
 

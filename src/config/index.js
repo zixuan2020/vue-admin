@@ -17,7 +17,7 @@ export default {
      * @description api请求基础路径
      */
     baseUrl: {
-        apiUrl: 'http://api.smalladmin.com',
+        apiUrl: 'http://127.0.0.1:8081',
         webSocketUrl: 'http://api.smalladmin.com',
     },
     /**
