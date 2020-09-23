@@ -49,6 +49,7 @@ module.exports = {
         'import/no-dynamic-require': 'off',
         'no-empty': 'off',
         'no-trailing-spaces': 'off',
+        'no-unused-vars': 'off',
     },
     parserOptions: {
         parser: 'babel-eslint',

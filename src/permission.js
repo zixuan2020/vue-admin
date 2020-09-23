@@ -1,7 +1,7 @@
 import { LoadingBar } from 'view-design'
-import axios from 'axios'
 import router from './router'
 import store from './store'
+import cookie from '@/lib/cookie.js'
 import createRoutes from '@/utils/createRoutes'
 import { getDocumentTitle, resetTokenAndClearUser } from './utils'
 
@@ -10,31 +10,12 @@ let hasMenus = false
 router.beforeEach(async (to, from, next) => {
     document.title = getDocumentTitle(to.meta.title)
     LoadingBar.start()
-    if (localStorage.getItem('token')) {
-        // 校验当前token是否有效
 
-        let token = localStorage.getItem('token')
-        next({ path: '/home' })
+    // 获取到Cookie数据内容
+    // console.log(cookie.getToken())
 
-        /* http.postAxios('/user/login', {})
-        .then((resp) => {
-            // 发送当前的Ajax请求
-            next({ path: '/' })
-        }).catch((err) => {
-            // 跳转到登录页面
-            hasMenus = false
-            if (to.path === '/login') {
-                next()
-            } else {
-                next('/login')
-            }
-
-            // 清楚Token 和 UserInfo数据
-            localStorage.clear()
-            LoadingBar.finish()
-        }) */
-
-        /* if (to.path === '/login') {
+    if (cookie.getToken()) {
+        if (to.path === '/login') {
             next({ path: '/' })
         } else if (hasMenus) {
             next()
@@ -52,7 +33,7 @@ router.beforeEach(async (to, from, next) => {
                 resetTokenAndClearUser()
                 next(`/login?redirect=${to.path}`)
             }
-        } */
+        }
     } else {
         hasMenus = false
         if (to.path === '/login') {

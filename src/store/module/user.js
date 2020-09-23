@@ -106,7 +106,7 @@ export default {
             return new Promise((resolve, reject) => {
                 loginApi
                     .login(params)
-                    .then(res => {
+                    .then((res) => {
                         localStorage.clear()
                         const data = res.data
                         commit('setToken', data.token)
