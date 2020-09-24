@@ -65,6 +65,16 @@ axios.interceptors.response.use(
 
 function validateResponseCode(res) {
     let { data } = res
+    if (data && data.code == 401) {
+        // 提示当前身份验证失败默认跳转回登录页面
+        cookie.clearToken()
+        localStorage.clear()
+
+        Message.error('当前身份验证失败,请输入账号密码进行正确的验证')
+        // 回到登录页面
+        this.$router.push({ path: '/login' })
+        return
+    }
     /* if (data && data.code && data.code !== 1) {
         if (data.code === 1001) {
             cookie.clearToken()

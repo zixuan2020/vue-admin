@@ -5,7 +5,7 @@
             <!-- logo -->
             <div class="logo-c">
                 <img src="../assets/imgs/logo.png" alt="logo" class="logo">
-                <span v-show="isShowAsideTitle">Small-Admin后台管理系统</span>
+                <span v-show="isShowAsideTitle">后台管理系统</span>
             </div>
             <!-- 菜单栏 -->
             <Menu class="menu" ref="asideMenu" theme="dark" width="100%" @on-select="selectMenuCallback"
@@ -155,7 +155,8 @@
 </template>
 
 <script>
-import { resetTokenAndClearUser } from '../utils'
+    import { resetTokenAndClearUser } from '../utils'
+    import cookie from '@/lib/cookie.js'
 
 export default {
     name: 'index',
@@ -203,9 +204,14 @@ export default {
             this.$refs.asideMenu.updateOpened()
         })
 
+        // 设置当前的localStore
+        localStorage.setItem('userName', JSON.parse(localStorage.getItem('userInfo')).name)
+
         // 设置用户信息
         this.userName = localStorage.getItem('userName')
-        this.userImg = localStorage.getItem('userImg')
+
+        // 头像引入当前路径
+        this.userImg = './favicon.ico'
 
         this.main = document.querySelector('.sec-right')
         this.asideArrowIcons = document.querySelectorAll('aside .ivu-icon-ios-arrow-down')
@@ -346,7 +352,10 @@ export default {
                     this.gotoPage('userinfo')
                     break
                 case '3':
+                    // 清除cookie的token
                     resetTokenAndClearUser()
+                    cookie.clearToken()
+
                     this.$router.push({ name: 'login' })
                     break
             }

@@ -1,7 +1,7 @@
 <template>
     <div class="login-vue" :style="bg">
         <div class="container">
-            <p class="title">small-admin后台管理系统</p>
+            <p class="title">后台管理系统</p>
             <div class="input-c">
                 <Input prefix="ios-contact" v-model="account" placeholder="用户名" clearable @on-blur="verifyAccount"/>
                 <p class="error">{{accountError}}</p>
@@ -41,16 +41,16 @@
             $route: {
                 handler(route) {
                     this.redirect = route.query && route.query.redirect
+                },
+                immediate: true,
             },
-            immediate: true,
         },
-    },
-    methods: {
-        ...mapActions(['handleLogin']),
+        methods: {
+            ...mapActions(['handleLogin']),
 
-        verifyAccount() {
-            if (this.account.match(/^[a-zA-Z0-9_-]{4,16}$/)) {
-                this.accountError = ''
+            verifyAccount() {
+                if (this.account.match(/^[a-zA-Z0-9_-]{4,16}$/)) {
+                    this.accountError = ''
             } else {
                 this.accountError = '用户名格式4到16位'
             }
@@ -100,7 +100,9 @@
                 })
                     .then((resp) => {
                         this.isShowLoading = false
-                        this.$router.push({ path: this.redirect || '/' })
+                        // 当前需要回到的页面
+                        console.log('当前需要回到的页面: ' + this.redirect)
+                        this.$router.push({ path: this.redirect || '/home' })
                     })
                     .catch((err) => {
                         this.isShowLoading = false

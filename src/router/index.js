@@ -39,11 +39,11 @@ export const asyncRoutes = {
         meta: { title: '表格' },
         component: () => import('../views/T1.vue'),
     },
-    password: {
-        path: 'password',
-        name: 'password',
-        meta: { title: '修改密码' },
-        component: () => import('../views/Password.vue'),
+    userList: {
+        path: 'userList',
+        name: 'userList',
+        meta: { title: '用户列表' },
+        component: () => import('../views/UserList.vue'),
     },
     msg: {
         path: 'msg',

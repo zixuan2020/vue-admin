@@ -109,6 +109,7 @@ export default {
                     .then((res) => {
                         localStorage.clear()
                         const data = res.data
+                        console.log('进行了数据的响应和token的设置')
                         commit('setToken', data.token)
                         // 保存用户登录
                         commit('setUserLoginInfo', {

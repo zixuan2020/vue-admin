@@ -14,6 +14,10 @@ router.beforeEach(async (to, from, next) => {
     // 获取到Cookie数据内容
     // console.log(cookie.getToken())
 
+    console.log('当前路由要去的路径: ' + to.name)
+    console.log(from)
+    console.log('当前路径: ' + from.fullPath)
+
     if (cookie.getToken()) {
         if (to.path === '/login') {
             next({ path: '/' })
@@ -28,8 +32,12 @@ router.beforeEach(async (to, from, next) => {
                 // 动态添加路由
                 router.addRoutes(routes)
                 hasMenus = true
+                console.log('当前所有的导航路径')
+                console.log(routes)
+
                 next({ path: to.path || '/' })
             } catch (error) {
+                // 出错清除所有的缓存数据
                 resetTokenAndClearUser()
                 next(`/login?redirect=${to.path}`)
             }

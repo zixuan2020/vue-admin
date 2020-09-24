@@ -13,13 +13,21 @@ const store = new Vuex.Store({
                 name: 'home', // 要跳转的路由名称 不是路径
                 size: 18, // icon大小
                 type: 'md-home', // icon类型
-                text: '主页', // 文本内容
+                text: '首页', // 文本内容
             },
             {
-                name: 'other', // 要跳转的路由名称 不是路径
                 size: 18, // icon大小
-                type: 'ios-egg-outline', // icon类型
-                text: '单独的路由', // 点击侧边栏跳到一个单独的路由页面，需要提前在 router.js 定义
+                type: 'ios-person', // icon类型
+                text: '用户模块', // 点击侧边栏跳到一个单独的路由页面，需要提前在 router.js 定义
+                children: [
+                    {
+                        type: 'ios-people',
+                        name: 'userList',
+                        text: '用户列表',
+                        // hidden 属性 隐藏此菜单 可以通过在地址栏上输入对应的 URL 来显示页面
+                        // hidden: true,
+                    },
+                ],
             },
             {
                 size: 18, // icon大小

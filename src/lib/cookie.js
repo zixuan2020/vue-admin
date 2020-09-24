@@ -6,9 +6,15 @@ export const TOKEN_KEY = 'token'
 
 export default {
     setToken: token => {
+        const expiration = new Date()
+        expiration.setTime(expiration.getTime() + cookieExpires * 60 * 1000)
+
+        console.log('设置Cookie过期时间: ' + expiration)
+
         Cookies.set(TOKEN_KEY, token, {
             // token在Cookie中存储的天数，默认1天
-            expires: cookieExpires || 7,
+            expires: expiration,
+
         })
     },
     getToken: () => {
