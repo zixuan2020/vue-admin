@@ -51,16 +51,16 @@
             verifyAccount() {
                 if (this.account.match(/^[a-zA-Z0-9_-]{4,16}$/)) {
                     this.accountError = ''
-            } else {
-                this.accountError = '用户名格式4到16位'
-            }
-        },
-        verifyPwd() {
-            // this.pwd.match(/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/)
-            if (this.pwd != '') {
-                this.pwdError = ''
-            } else {
-                this.pwdError = '最少6位,至少1个大写字母,1个小写字母,1个数字,1个特殊字符'
+                } else {
+                    this.accountError = '用户名格式4到16位'
+                }
+            },
+            verifyPwd() {
+                // this.pwd.match(/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/)
+                if (this.pwd != '') {
+                    this.pwdError = ''
+                } else {
+                    this.pwdError = '最少6位,至少1个大写字母,1个小写字母,1个数字,1个特殊字符'
             }
         },
         register() {
@@ -70,29 +70,9 @@
 
         },
         submit() {
-            /* if (this.account === 'admin' && this.pwd === 'admin') {
-                                            this.isShowLoading = true
-                                            // 登陆成功 设置用户信息
-                                            localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/22117876?s=460&v=4')
-                                            localStorage.setItem('userName', '小明')
-                                            // 登陆成功 假设这里是后台返回的 token
-                                            localStorage.setItem('token', 'i_am_token')
-                                            this.$router.push({ path: this.redirect || '/' })
-                                        } else {
-                                            if (this.account !== 'admin') {
-                                                this.accountError = '账号为admin'
-                                            }
-
-                                            if (this.pwd !== 'admin') {
-                                                this.pwdError = '密码为admin'
-                                            }
-                                        } */
-            // 根据账号密码获取用户的token
-
             if (this.accountError == '' && this.pwdError == '') {
                 this.isShowLoading = true
                 // 发送axios请求检查用户登录是否成功
-
 
                 this.handleLogin({
                     username: this.account,

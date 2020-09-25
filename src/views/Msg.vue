@@ -1,7 +1,6 @@
 <template>
     <div>
-        查看消息
-        <input type="text">
+        查看当前消息内容
     </div>
 </template>
 

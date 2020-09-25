@@ -3,9 +3,12 @@
         <div class="actionBar">
             <i-button type="info" @click="changeCheckBoxValue">信息按钮</i-button>
         </div>
-        <i-table height="300" ref="selection" border :columns="columns4" :data="data1"></i-table>
+        <i-table height="450" ref="selection" border :columns="columns4" :data="data1"></i-table>
         <template>
-            <Page class="page" :total="100" show-sizer></Page>
+            <Page ref="page" class="page"
+                  @on-page-size-change="changePageSize" :current="pageNum" :page-size="pageSize"
+                  @on-change="changePageNumber" :total="total" show-sizer>
+            </Page>
         </template>
     </div>
 </template>
@@ -13,10 +16,14 @@
 <script>
     import userApi from '@/api/user'
 
+
     export default {
         name: 'userList',
         data() {
             return {
+                pageSize: 10,
+                pageNum: 1,
+                total: 0,
                 columns4: [
                     {
                         type: 'selection',
@@ -24,7 +31,7 @@
                         align: 'center',
                     },
                     {
-                        title: '用戶名',
+                        title: '用户名',
                         key: 'username',
                         align: 'center',
                     },
@@ -77,14 +84,42 @@
         },
         mounted() {
             // 页面渲染完成发送一次获取用户列表请求
-            userApi.userList()
-                .then((resp) => {
-                    this.data1 = resp.data
-                })
+            this.sendUserListPage()
+
         },
         methods: {
             changeCheckBoxValue() {
                 console.log(this.$refs.selection.getSelection())
+            },
+
+            changePageNumber(currentPage) {
+                this.pageNum = currentPage
+                // 发送axios向后端请求数据
+                this.sendUserListPage()
+            },
+            changePageSize(newPageSize) {
+                this.pageSize = newPageSize
+
+                // 发送 axios请求向前台发送书
+                this.sendUserListPage()
+            },
+            sendUserListPage() {
+                userApi.userList({
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                })
+                    .then((resp) => {
+                        let list = resp.data.records
+                        if (list && list.length != 0) {
+                            this.data1 = list
+                            this.pageNum = resp.data.current
+                            this.pageSize = resp.data.size
+                            this.total = resp.data.total
+
+
+                        }
+                    })
+
             },
         },
     }

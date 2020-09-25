@@ -50,6 +50,7 @@ module.exports = {
         'no-empty': 'off',
         'no-trailing-spaces': 'off',
         'no-unused-vars': 'off',
+        'padded-blocks': 'off',
     },
     parserOptions: {
         parser: 'babel-eslint',
