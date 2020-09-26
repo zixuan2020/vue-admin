@@ -51,7 +51,13 @@ module.exports = {
         'no-trailing-spaces': 'off',
         'no-unused-vars': 'off',
         'padded-blocks': 'off',
-        'func-names': 'off'
+        'brace-style': 'off',
+        'func-names': 'off',
+        'no-undef': 'off',
+        "no-restricted-syntax": 'off',
+        'no-restricted-properties': 'off',
+        'no-underscore-dangle': 'off',
+        'radix': 'off'
     },
     parserOptions: {
         parser: 'babel-eslint',

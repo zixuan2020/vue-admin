@@ -19,9 +19,9 @@ export const getParams = url => {
  * @description 获取数据类型
  */
 export const getType = obj => ({}.toString
-    .call(obj)
-    .match(/\s([a-zA-Z]+)/)[1]
-    .toLowerCase())
+.call(obj)
+.match(/\s([a-zA-Z]+)/)[1]
+.toLowerCase())
 // 日期格式
 export const dateFormat = {
     YMD: 'YMD',
@@ -282,15 +282,15 @@ export const utils = {
     // 校验字符串是否相同 合同使用
     contrastString(originStr, changeStr) {
         let origin = originStr
-            .replace(/\s*/g, '')
-            .replace(/"/g, '\'')
-            .replace(/&nbsp;/g, '')
-            .replace(/disabled=\/'\/'/g, 'disabled')
+        .replace(/\s*/g, '')
+        .replace(/"/g, '\'')
+        .replace(/&nbsp;/g, '')
+        .replace(/disabled=\/'\/'/g, 'disabled')
         let change = changeStr
-            .replace(/\s*/g, '')
-            .replace(/"/g, '\'')
-            .replace(/&nbsp;/g, '')
-            .replace(/disabled=\/'\/'/g, 'disabled')
+        .replace(/\s*/g, '')
+        .replace(/"/g, '\'')
+        .replace(/&nbsp;/g, '')
+        .replace(/disabled=\/'\/'/g, 'disabled')
         return origin === change
     },
     // 获取当前日期getDateStr(0)、前几天getDateStr(-10)、后几天getDateStr(20)
@@ -367,7 +367,7 @@ export const utils = {
         date = this.getDate(new Date(date), 'YMD')
         let startTime = Date.parse(new Date(date)) // IE支持“yyyy/MM/dd”格式
         let endTime = Date.parse(this.getDate(new Date(), 'YMD'))
-        let day = parseInt((endTime - startTime) / (1000 * 60 * 60 * 24))
+        let day = parseInt((endTime - startTime) / (1000 * 60 * 60 * 24), 10)
         return day
     },
     getDateIntervalYear(firstDate, secondDate) {
@@ -392,7 +392,7 @@ export const utils = {
         let startTime = Date.parse(startDate)
         let endTime = Date.parse(endDate)
         // 得到差了多少天
-        let day = parseInt((endTime - startTime) / (1000 * 60 * 60 * 24))
+        let day = parseInt((endTime - startTime) / (1000 * 60 * 60 * 24), 10)
         if (day <= 0) {
             return 0
         }
@@ -464,7 +464,7 @@ export const utils = {
                     }
                     // 归零
                     zeroCount = 0
-                    chineseStr += cnNums[parseInt(n)] + cnIntRadice[m]
+                    chineseStr += cnNums[parseInt(n, 10)] + cnIntRadice[m]
                 }
                 if (m === 0 && zeroCount < 4) {
                     chineseStr += cnIntUnits[q]
@@ -499,14 +499,14 @@ export const dateTimeRangeConvert = (timerange) => {
         arr.push(null)
     } else {
         arr.push(moment(timerange[0])
-            .format('YYYY-MM-DD 00:00:00'))
+        .format('YYYY-MM-DD 00:00:00'))
     }
 
     if (timerange[1] === '') {
         arr.push(null)
     } else {
         arr.push(moment(timerange[1])
-            .format('YYYY-MM-DD 23:59:59'))
+        .format('YYYY-MM-DD 23:59:59'))
     }
     return arr
 }

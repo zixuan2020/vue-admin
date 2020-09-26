@@ -31,10 +31,21 @@
 </template>
 
 <script>
+import InforCard from '@/components/info-card'
+import CountTo from '@/components/count-to'
+import { ChartPie, ChartBar } from '@/components/charts'
 import { fetchUserData } from '@/api'
+import example from './example'
 
 export default {
     name: 'home',
+    components: {
+        InforCard,
+        CountTo,
+        ChartPie,
+        ChartBar,
+        example,
+    },
     data() {
         return {
             inforCardData: [
