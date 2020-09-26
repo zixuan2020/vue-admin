@@ -112,9 +112,9 @@ export default {
         getUserData() {
             // 获取当前用户的github信息
             fetchUserData()
-                .then((resp) => {
-                    this.userInfo = JSON.stringify(resp)
-                })
+            .then((resp) => {
+                this.userInfo = JSON.stringify(resp)
+            })
 
         },
     },

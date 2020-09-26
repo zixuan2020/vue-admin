@@ -105,22 +105,22 @@ export default {
             params.username = params.username.trim()
             return new Promise((resolve, reject) => {
                 loginApi
-                    .login(params)
-                    .then((res) => {
-                        localStorage.clear()
-                        const data = res.data
-                        console.log('进行了数据的响应和token的设置')
-                        commit('setToken', data.token)
-                        // 保存用户登录
-                        commit('setUserLoginInfo', {
-                            uid: data.uid,
-                            name: data.username,
-                        })
-                        resolve()
+                .login(params)
+                .then((res) => {
+                    localStorage.clear()
+                    const data = res.data
+                    console.log('进行了数据的响应和token的设置')
+                    commit('setToken', data.token)
+                    // 保存用户登录
+                    commit('setUserLoginInfo', {
+                        uid: data.uid,
+                        name: data.username,
                     })
-                    .catch(err => {
-                        reject(err)
-                    })
+                    resolve()
+                })
+                .catch(err => {
+                    reject(err)
+                })
             })
         },
     },

@@ -30,13 +30,6 @@ const store = new Vuex.Store({
                 ],
             },
             {
-                size: 18, // icon大小
-                type: 'md-arrow-forward', // icon类型
-                text: '外链',
-                url: 'https://www.baidu.com',
-                isExternal: true, // 外链 跳到一个外部的 URL 页面
-            },
-            {
                 text: '二级菜单',
                 type: 'ios-paper',
                 children: [

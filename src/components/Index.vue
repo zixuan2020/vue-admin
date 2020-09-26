@@ -155,30 +155,30 @@
 </template>
 
 <script>
-    import { resetTokenAndClearUser } from '../utils'
-    import cookie from '@/lib/cookie.js'
+import { resetTokenAndClearUser } from '../utils'
+import cookie from '@/lib/cookie.js'
 
-    export default {
-        name: 'index',
-        data() {
-            return {
-                // 用于储存页面路径
-                paths: {},
-                // 当前显示页面
-                currentPage: '',
-                openMenus: [], // 要打开的菜单名字 name属性
-                menuCache: [], // 缓存已经打开的菜单
-                hasNewMsg: false, // 是否有新消息
-                isShowRouter: true,
-                msgNum: '10', // 新消息条数
-                // 标签栏         标签标题     路由名称
-                // 数据格式 {text: '首页', name: 'home'}
-                // 用于缓存打开的路由 在标签栏上展示
-                tagsArry: [],
-                arrowUp: false, // 用户详情向上箭头
-                arrowDown: true, // 用户详情向下箭头
-                isShowAsideTitle: true, // 是否展示侧边栏内容
-                main: null, // 页面主要内容区域
+export default {
+    name: 'index',
+    data() {
+        return {
+            // 用于储存页面路径
+            paths: {},
+            // 当前显示页面
+            currentPage: '',
+            openMenus: [], // 要打开的菜单名字 name属性
+            menuCache: [], // 缓存已经打开的菜单
+            hasNewMsg: false, // 是否有新消息
+            isShowRouter: true,
+            msgNum: '10', // 新消息条数
+            // 标签栏         标签标题     路由名称
+            // 数据格式 {text: '首页', name: 'home'}
+            // 用于缓存打开的路由 在标签栏上展示
+            tagsArry: [],
+            arrowUp: false, // 用户详情向上箭头
+            arrowDown: true, // 用户详情向下箭头
+            isShowAsideTitle: true, // 是否展示侧边栏内容
+            main: null, // 页面主要内容区域
             asideClassName: 'aside-big', // 控制侧边栏宽度变化
             asideArrowIcons: [], // 缓存侧边栏箭头图标 收缩时用
             // 面包屑

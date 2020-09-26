@@ -19,48 +19,48 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
-    import { localSave, localRead } from '@/lib/local'
+import { mapActions } from 'vuex'
+import { localSave, localRead } from '@/lib/local'
 
-    export default {
-        name: 'login',
-        data() {
-            return {
-                account: '',
-                pwd: '',
-                accountError: '',
-                pwdError: '',
-                isShowLoading: false,
-                bg: {},
+export default {
+    name: 'login',
+    data() {
+        return {
+            account: '',
+            pwd: '',
+            accountError: '',
+            pwdError: '',
+            isShowLoading: false,
+            bg: {},
+        }
+    },
+    created() {
+        this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
+    },
+    watch: {
+        $route: {
+            handler(route) {
+                this.redirect = route.query && route.query.redirect
+            },
+            immediate: true,
+        },
+    },
+    methods: {
+        ...mapActions(['handleLogin']),
+
+        verifyAccount() {
+            if (this.account.match(/^[a-zA-Z0-9_-]{4,16}$/)) {
+                this.accountError = ''
+            } else {
+                this.accountError = '用户名格式4到16位'
             }
         },
-        created() {
-            this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
-        },
-        watch: {
-            $route: {
-                handler(route) {
-                    this.redirect = route.query && route.query.redirect
-                },
-                immediate: true,
-            },
-        },
-        methods: {
-            ...mapActions(['handleLogin']),
-
-            verifyAccount() {
-                if (this.account.match(/^[a-zA-Z0-9_-]{4,16}$/)) {
-                    this.accountError = ''
-                } else {
-                    this.accountError = '用户名格式4到16位'
-                }
-            },
-            verifyPwd() {
-                // this.pwd.match(/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/)
-                if (this.pwd != '') {
-                    this.pwdError = ''
-                } else {
-                    this.pwdError = '最少6位,至少1个大写字母,1个小写字母,1个数字,1个特殊字符'
+        verifyPwd() {
+            // this.pwd.match(/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/)
+            if (this.pwd != '') {
+                this.pwdError = ''
+            } else {
+                this.pwdError = '最少6位,至少1个大写字母,1个小写字母,1个数字,1个特殊字符'
             }
         },
         register() {
@@ -78,15 +78,15 @@
                     username: this.account,
                     password: this.pwd,
                 })
-                    .then((resp) => {
-                        this.isShowLoading = false
-                        // 当前需要回到的页面
-                        console.log('当前需要回到的页面: ' + this.redirect)
-                        this.$router.push({ path: this.redirect || '/home' })
-                    })
-                    .catch((err) => {
-                        this.isShowLoading = false
-                    })
+                .then((resp) => {
+                    this.isShowLoading = false
+                    // 当前需要回到的页面
+                    console.log('当前需要回到的页面: ' + this.redirect)
+                    this.$router.push({ path: this.redirect || '/home' })
+                })
+                .catch((err) => {
+                    this.isShowLoading = false
+                })
             }
         },
     },
