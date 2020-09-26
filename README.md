@@ -7,6 +7,8 @@
 * [iview](https://www.iviewui.com/docs/guide/install)
 * [axios](https://www.kancloud.cn/yunye/axios/234845)
 * [vuex](https://vuex.vuejs.org/zh/)
+* [js-cookie](https://juejin.im/post/6844903645616537613)
+* [echarts](https://echarts.apache.org/zh/index.html)
 
 ### 功能
 
