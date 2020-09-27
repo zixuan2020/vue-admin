@@ -52,25 +52,25 @@ export default {
                 {
                     title: '新增用户',
                     icon: 'md-person-add',
-                    count: 803,
+                    count: 10,
                     color: '#2d8cf0',
                 },
                 {
                     title: '累计点击',
                     icon: 'md-locate',
-                    count: 232,
+                    count: 200,
                     color: '#19be6b',
                 },
                 {
                     title: '新增问答',
                     icon: 'md-help-circle',
-                    count: 142,
+                    count: 10,
                     color: '#ff9900',
                 },
                 {
                     title: '分享统计',
                     icon: 'md-share',
-                    count: 657,
+                    count: 12,
                     color: '#ed3f14',
                 },
                 {
@@ -88,34 +88,34 @@ export default {
             ],
             pieData: [
                 {
-                    value: 335,
+                    value: 10,
                     name: '直接访问',
                 },
                 {
-                    value: 310,
+                    value: 20,
                     name: '邮件营销',
                 },
                 {
-                    value: 234,
+                    value: 30,
                     name: '联盟广告',
                 },
                 {
-                    value: 135,
+                    value: 40,
                     name: '视频广告',
                 },
                 {
-                    value: 1548,
+                    value: 50,
                     name: '搜索引擎',
                 },
             ],
             barData: {
-                Mon: 13253,
-                Tue: 34235,
-                Wed: 26321,
-                Thu: 12340,
-                Fri: 24643,
-                Sat: 1322,
-                Sun: 1324,
+                Mon: 10,
+                Tue: 20,
+                Wed: 30,
+                Thu: 40,
+                Fri: 50,
+                Sat: 60,
+                Sun: 70,
             },
         }
     },
