@@ -11,6 +11,20 @@
                   @on-change="changePageNumber" :total="total" show-sizer>
             </Page>
         </template>
+
+        <Modal v-model="modal6" width="360">
+            <p slot="header" style="color:#95f153;text-align:center">
+                <Icon type="ios-information-circle"></Icon>
+                <span>编辑用户信息</span>
+            </p>
+            <div style="text-align:center">
+                <p>您当前的用户信息</p>
+
+            </div>
+            <div slot="footer">
+                <Button type="info" size="large" long :loading="loading" @click="del">Delete</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -26,6 +40,15 @@ export default {
             pageNum: 1,
             total: 0,
             spinShow: true,
+            modal6: false, // 是否显示模态框
+            loading: false, // 点击按钮是否加载
+            userInfo: {
+                id: 0,
+                username: '',
+                password: '',
+                birthday: '',
+                fullName: '',
+            },
             columns4: [
                 {
                     type: 'selection',
@@ -62,7 +85,14 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    console.log(111)
+                                    let { row } = params
+                                    this.userInfo.id = row.id
+                                    this.userInfo.username = row.username
+                                    this.userInfo.password = row.password
+                                    this.userInfo.birthday = row.birthday
+                                    this.userInfo.fullName = row.fullName
+                                    this.modal6 = true
+                                    console.log(this.userInfo)
                                 },
                             },
                         }, '编辑'),
@@ -126,12 +156,20 @@ export default {
 
                 }
                 this.spinShow = false
-            }).catch(err => {
+            })
+            .catch(err => {
                 this.spinShow = false
             })
 
         },
-
+        del() {
+            this.modal_loading = true
+            setTimeout(() => {
+                this.modal_loading = false
+                this.modal2 = false
+                this.$Message.success('Successfully delete')
+            }, 2000)
+        },
     },
 }
 </script>
@@ -152,15 +190,23 @@ export default {
     }
 
 
-    .demo-spin-icon-load{
+    .demo-spin-icon-load {
         animation: ani-demo-spin 1s linear infinite;
     }
+
     @keyframes ani-demo-spin {
-        from { transform: rotate(0deg);}
-        50%  { transform: rotate(180deg);}
-        to   { transform: rotate(360deg);}
+        from {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(180deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
     }
-    .demo-spin-col{
+
+    .demo-spin-col {
         height: 100px;
         position: relative;
         border: 1px solid #eee;
