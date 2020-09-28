@@ -1,8 +1,7 @@
 <template>
     <div class="home-container">
         <Row :gutter="20">
-            <i-col :xs="12" :md="8" :lg="4" v-for="(infor, i) in inforCardData"
-                   :key="`infor-${i}`"
+            <i-col :xs="12" :md="8" :lg="4" v-for="(infor, i) in inforCardData" :key="`infor-${i}`"
                    style="height: 120px;padding-bottom: 10px;">
                 <infor-card shadow :color="infor.color" :icon="infor.icon" :icon-size="36">
                     <count-to :end="infor.count" count-class="count-style"/>
@@ -24,7 +23,7 @@
         </Row>
         <Row>
             <Card shadow>
-                <example style="height: 310px;"/>
+                <example style="height: 230px;"/>
             </Card>
         </Row>
     </div>
@@ -50,8 +49,8 @@ export default {
         return {
             inforCardData: [
                 {
-                    title: '新增用户',
-                    icon: 'md-person-add',
+                    title: '用户数量',
+                    icon: 'md-person',
                     count: 10,
                     color: '#2d8cf0',
                 },
@@ -134,8 +133,8 @@ export default {
 
 <style scoped>
 .home-container {
-    padding: 10px;
-    padding-top: 5px;
+    padding: 18px;
+
 }
 .home-content {
     padding: 10px;

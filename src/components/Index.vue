@@ -411,11 +411,13 @@ export default {
         // 刷新当前标签页
         reloadPage() {
             let name = this.$route.name
+
             let index = this.keepAliveData.indexOf(name)
             this.$nextTick(() => {
                 if (this.tagsArry.length) {
                     this.isShowRouter = false
                     this.tagsArry.splice(index, 1)
+
                     this.$nextTick(() => {
                         this.tagsArry.splice(index, 0, { name, text: this.nameToTitle[name] })
                         this.gotoPage(name)
@@ -686,7 +688,7 @@ a {
 .view-c {
     position: relative;
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 .pointer {
     cursor: pointer;

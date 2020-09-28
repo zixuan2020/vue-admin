@@ -17,7 +17,7 @@ const store = new Vuex.Store({
             },
             {
                 size: 18, // icon大小
-                type: 'ios-person', // icon类型
+                type: 'ios-cog', // icon类型
                 text: '用户模块', // 点击侧边栏跳到一个单独的路由页面，需要提前在 router.js 定义
                 children: [
                     {

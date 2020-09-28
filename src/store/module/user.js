@@ -102,7 +102,6 @@ export default {
     actions: {
         // 登录
         handleLogin({ commit }, params) {
-            params.username = params.username.trim()
             return new Promise((resolve, reject) => {
                 loginApi
                 .login(params)

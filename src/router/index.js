@@ -31,7 +31,7 @@ export const asyncRoutes = {
         path: 'home',
         name: 'home',
         meta: { title: '主页' },
-        component: () => import('../views/Home.vue'),
+        component: () => import('../views/home'),
     },
     t1: {
         path: 't1',
@@ -43,7 +43,7 @@ export const asyncRoutes = {
         path: 'userList',
         name: 'userList',
         meta: { title: '用户列表' },
-        component: () => import('../views/UserList.vue'),
+        component: () => import('../views/user/user-list'),
     },
     msg: {
         path: 'msg',
@@ -55,7 +55,7 @@ export const asyncRoutes = {
         path: 'userinfo',
         name: 'userinfo',
         meta: { title: '用户信息' },
-        component: () => import('../views/UserInfo.vue'),
+        component: () => import('../views/user/UserInfo.vue'),
     },
 }
 
@@ -68,6 +68,12 @@ const router = createRouter()
 export function resetRouter() {
     const newRouter = createRouter()
     router.matcher = newRouter.matcher
+}
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location, onResolve, onReject) {
+    if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+    return originalPush.call(this, location).catch(err => err)
 }
 
 export default router

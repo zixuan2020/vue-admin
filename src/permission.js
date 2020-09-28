@@ -1,4 +1,5 @@
 import { LoadingBar } from 'view-design'
+import { mapActions } from 'vuex'
 import router from './router'
 import store from './store'
 import cookie from '@/lib/cookie.js'

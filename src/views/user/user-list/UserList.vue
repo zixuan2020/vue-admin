@@ -1,9 +1,10 @@
 <template>
     <div class="card">
         <div class="actionBar">
-            <i-button type="info" @click="changeCheckBoxValue">信息按钮</i-button>
+            <i-button type="info" @click="changeCheckBoxValue">新增用户</i-button>
         </div>
         <i-table height="450" ref="selection" border :columns="columns4" :data="data1"></i-table>
+        <Spin size="large" fix v-if="spinShow"></Spin>
         <template>
             <Page ref="page" class="page"
                   @on-page-size-change="changePageSize" :current="pageNum" :page-size="pageSize"
@@ -14,8 +15,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import userApi from '@/api/user'
-
 
 export default {
     name: 'userList',
@@ -24,6 +25,7 @@ export default {
             pageSize: 10,
             pageNum: 1,
             total: 0,
+            spinShow: true,
             columns4: [
                 {
                     type: 'selection',
@@ -83,11 +85,14 @@ export default {
         }
     },
     mounted() {
+
+
         // 页面渲染完成发送一次获取用户列表请求
         this.sendUserListPage()
 
     },
     methods: {
+
         changeCheckBoxValue() {
             console.log(this.$refs.selection.getSelection())
         },
@@ -104,6 +109,8 @@ export default {
             this.sendUserListPage()
         },
         sendUserListPage() {
+            // 数据加载效果
+
             userApi.userList({
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
@@ -118,9 +125,13 @@ export default {
 
 
                 }
+                this.spinShow = false
+            }).catch(err => {
+                this.spinShow = false
             })
 
         },
+
     },
 }
 </script>
@@ -138,5 +149,20 @@ export default {
     .page {
         text-align: right;
         padding: 10px 0px 10px 0px;
+    }
+
+
+    .demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
+    }
+    @keyframes ani-demo-spin {
+        from { transform: rotate(0deg);}
+        50%  { transform: rotate(180deg);}
+        to   { transform: rotate(360deg);}
+    }
+    .demo-spin-col{
+        height: 100px;
+        position: relative;
+        border: 1px solid #eee;
     }
 </style>
