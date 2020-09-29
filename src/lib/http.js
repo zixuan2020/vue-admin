@@ -12,6 +12,7 @@ let axios = Axios.create({
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json; charset=utf-8',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
     },
 })
 

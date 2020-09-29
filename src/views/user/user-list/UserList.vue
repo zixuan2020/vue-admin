@@ -3,7 +3,7 @@
         <div class="actionBar">
             <i-button type="info" @click="changeCheckBoxValue">新增用户</i-button>
         </div>
-        <i-table height="450" ref="selection" border :columns="columns4" :data="data1"></i-table>
+        <i-table height="450" ref="selection" border :columns="tableHead" :data="tableData"></i-table>
         <Spin size="large" fix v-if="spinShow"></Spin>
         <template>
             <Page ref="page" class="page"
@@ -12,17 +12,37 @@
             </Page>
         </template>
 
-        <Modal v-model="modal6" width="360">
-            <p slot="header" style="color:#95f153;text-align:center">
+        <Modal v-model="modal6" width="540">
+            <p slot="header" style="color:#FF6600;text-align:left">
                 <Icon type="ios-information-circle"></Icon>
                 <span>编辑用户信息</span>
             </p>
-            <div style="text-align:center">
-                <p>您当前的用户信息</p>
+            <div>
+
+                <Row :gutter="12" class="interval">
+                    <i-col span="6"><Icon type="md-person" size="30" />用户名:</i-col>
+                    <i-col span="14">
+                        <i-input disabled v-model="userInfo.username" placeholder="用户名" style="width: 200px"></i-input>
+                    </i-col>
+                </Row>
+                <Row :gutter="12" class="interval">
+                    <i-col span="6"><Icon type="md-calendar" size="30" />生日:</i-col>
+                    <i-col span="14">
+                        <Date-picker @on-change="changeBirthday" type="date" format="yyyy-MM-dd" :value="userInfo.birthday"
+                                 placeholder="选择日期" style="width: 300px"></Date-picker>
+                    </i-col>
+                </Row>
+                <Row :gutter="12" class="interval">
+                    <i-col span="6"><Icon type="md-ionitron" size="30" />真实姓名:</i-col>
+                    <i-col span="14">
+                        <i-input  v-model="userInfo.fullName"
+                                 placeholder="用户名" style="width: 200px"></i-input>
+                    </i-col>
+                </Row>
 
             </div>
             <div slot="footer">
-                <Button type="info" size="large" long :loading="loading" @click="del">Delete</Button>
+                <Button type="info" size="large" long :loading="loading" @click="saveUser">保存</Button>
             </div>
         </Modal>
     </div>
@@ -45,11 +65,13 @@ export default {
             userInfo: {
                 id: 0,
                 username: '',
-                password: '',
                 birthday: '',
                 fullName: '',
+                remoteIp: '',
+                updateTime: '',
+                createTime: '',
             },
-            columns4: [
+            tableHead: [
                 {
                     type: 'selection',
                     width: 60,
@@ -71,6 +93,21 @@ export default {
                     align: 'center',
                 },
                 {
+                    title: '登录IP',
+                    key: 'remoteIp',
+                    align: 'center',
+                },
+                {
+                    title: '更新时间',
+                    key: 'updateTime',
+                    align: 'center',
+                },
+                {
+                    title: '创建时间',
+                    key: 'createTime',
+                    align: 'center',
+                },
+                {
                     title: '操作',
                     key: 'action',
                     align: 'center',
@@ -86,13 +123,17 @@ export default {
                             on: {
                                 click: () => {
                                     let { row } = params
+
+                                    console.log(row)
                                     this.userInfo.id = row.id
                                     this.userInfo.username = row.username
-                                    this.userInfo.password = row.password
                                     this.userInfo.birthday = row.birthday
                                     this.userInfo.fullName = row.fullName
+                                    this.userInfo.remoteIp = row.remoteIp
+                                    this.userInfo.updateTime = row.updateTime
+                                    this.userInfo.createTime = row.createTime
                                     this.modal6 = true
-                                    console.log(this.userInfo)
+
                                 },
                             },
                         }, '编辑'),
@@ -103,15 +144,26 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    console.log(params)
-                                    console.log(h)
+                                    let { row } = params
+                                    // 删除当前用户数据通过uid
+                                    userApi.delUser({ id: row.id })
+                                    .then((resp) => {
+                                        if (re.code == 200) {
+                                            this.$Message.success('用户数据删除成功')
+                                        } else {
+                                            this.$Message.error('用户数据删除失败')
+                                        }
+                                    }).catch(e => {
+                                        this.$Message.error('用户数据删除失败')
+                                    })
+                                    this.sendUserListPage()
                                 },
                             },
                         }, '删除'),
                     ]),
                 },
             ],
-            data1: [],
+            tableData: [],
         }
     },
     mounted() {
@@ -122,7 +174,9 @@ export default {
 
     },
     methods: {
-
+        changeBirthday(e) {
+            this.userInfo.birthday = e
+        },
         changeCheckBoxValue() {
             console.log(this.$refs.selection.getSelection())
         },
@@ -148,7 +202,7 @@ export default {
             .then((resp) => {
                 let list = resp.data.records
                 if (list && list.length != 0) {
-                    this.data1 = list
+                    this.tableData = list
                     this.pageNum = resp.data.current
                     this.pageSize = resp.data.size
                     this.total = resp.data.total
@@ -162,13 +216,35 @@ export default {
             })
 
         },
-        del() {
-            this.modal_loading = true
-            setTimeout(() => {
-                this.modal_loading = false
-                this.modal2 = false
-                this.$Message.success('Successfully delete')
-            }, 2000)
+
+        saveUser() {
+            this.loading = true
+
+            // 发送ajax请求修改当前用户数据
+            userApi.saveUser(this.userInfo)
+            .then((resp) => {
+
+                if (resp.code == 200) {
+                    this.$Message.success('保存用户数据成功')
+                } else {
+                    this.$Message.error('用户数据保存失败')
+                }
+                this.loading = false
+                this.modal6 = false
+
+                // 重新请求当前页面数据
+                this.sendUserListPage()
+            })
+            .catch((err) => {
+                this.loading = false
+                this.modal6 = false
+                this.$Message.error('用户数据保存失败')
+
+                // 重新请求当前页面数据
+                this.sendUserListPage()
+            })
+
+
         },
     },
 }
@@ -210,5 +286,9 @@ export default {
         height: 100px;
         position: relative;
         border: 1px solid #eee;
+    }
+
+    .interval{
+        padding: 10px;
     }
 </style>
