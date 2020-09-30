@@ -12,7 +12,11 @@
             </Page>
         </template>
 
-        <Modal v-model="modal6" width="540">
+        <!--    新增用户   -->
+
+
+        <!--   保存用户     -->
+        <Modal v-model="isShowEditModal" width="540">
             <p slot="header" style="color:#FF6600;text-align:left">
                 <Icon type="ios-information-circle"></Icon>
                 <span>编辑用户信息</span>
@@ -45,6 +49,15 @@
                 <Button type="info" size="large" long :loading="loading" @click="saveUser">保存</Button>
             </div>
         </Modal>
+
+        <!--  确认删除      -->
+        <Modal
+            title="确认删除"
+            v-model="isDelModel"
+            @on-ok="delUser"
+            class-name="vertical-center-modal">
+            <p>您确定需要删除当前用户信息吗？</p>
+        </Modal>
     </div>
 </template>
 
@@ -60,8 +73,11 @@ export default {
             pageNum: 1,
             total: 0,
             spinShow: true,
-            modal6: false, // 是否显示模态框
+            isShowEditModal: false, // 是否显示模态框
+            isDelModel: false, // 是否显示模态框
             loading: false, // 点击按钮是否加载
+            isDel: false, // 确认删除模态框
+            delUserId: 0,
             userInfo: {
                 id: 0,
                 username: '',
@@ -132,7 +148,7 @@ export default {
                                     this.userInfo.remoteIp = row.remoteIp
                                     this.userInfo.updateTime = row.updateTime
                                     this.userInfo.createTime = row.createTime
-                                    this.modal6 = true
+                                    this.isShowEditModal = true
 
                                 },
                             },
@@ -146,17 +162,10 @@ export default {
                                 click: () => {
                                     let { row } = params
                                     // 删除当前用户数据通过uid
-                                    userApi.delUser({ id: row.id })
-                                    .then((resp) => {
-                                        if (re.code == 200) {
-                                            this.$Message.success('用户数据删除成功')
-                                        } else {
-                                            this.$Message.error('用户数据删除失败')
-                                        }
-                                    }).catch(e => {
-                                        this.$Message.error('用户数据删除失败')
-                                    })
-                                    this.sendUserListPage()
+
+                                    this.isDelModel = true
+                                    this.delUserId = row.id
+
                                 },
                             },
                         }, '删除'),
@@ -230,21 +239,33 @@ export default {
                     this.$Message.error('用户数据保存失败')
                 }
                 this.loading = false
-                this.modal6 = false
+                this.isShowEditModal = false
 
                 // 重新请求当前页面数据
                 this.sendUserListPage()
             })
             .catch((err) => {
                 this.loading = false
-                this.modal6 = false
+                this.isShowEditModal = false
                 this.$Message.error('用户数据保存失败')
 
                 // 重新请求当前页面数据
                 this.sendUserListPage()
             })
+        },
 
-
+        delUser() {
+            userApi.delUser({ id: this.delUserId })
+            .then((resp) => {
+                if (resp.code == 200) {
+                    this.$Message.success('用户数据删除成功')
+                } else {
+                    this.$Message.error('用户数据删除失败')
+                }
+            }).catch(e => {
+                this.$Message.error('用户数据删除失败')
+            })
+            this.sendUserListPage()
         },
     },
 }
